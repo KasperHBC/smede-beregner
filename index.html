@@ -24,16 +24,18 @@
     <!-- Script til at indlæse og vise Excel-data -->
     <script>
         async function loadExcelData() {
-            const response = await fetch('https://onedrive.live.com/download?resid=F7F735BBA65A02D8%21491&authkey=%21AFXG1ur6Q5O9Z_A');
+            // Opdater URL'en til den lokale sti til Excel-filen
+            const response = await fetch('./procespyramide.xlsx');
             const arrayBuffer = await response.arrayBuffer();
             const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-
+        
             const firstSheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[firstSheetName];
             const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
+        
             displayData(jsonData);
         }
+
 
         function displayData(data) {
             const table = document.createElement('table');
